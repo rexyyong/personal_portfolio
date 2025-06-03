@@ -1,0 +1,39 @@
+nav {
+    float: left;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+h2 {
+    margin-left: 10px;
+    color: white;
+}
+
+ul {
+    list-style-type: none;
+    overflow: hidden;
+    position: absolute;
+    right: 0;
+}
+  
+li {
+    float: left;
+}
+
+li a {
+    display: block;
+    box-sizing: border-box;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    padding: 25px 15px;
+}
+
+li a:hover:not(.active) {
+    background-color: #111;
+}
+
+.active {
+    background-color:#04AA6D;
+}
