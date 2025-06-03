@@ -1,33 +1,38 @@
 nav {
-    float: left;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 0px;
+    background: inherit; /* Optional: set a background if needed */
+    margin-bottom: 10px;
+    height: 10vh;
 }
 
 h2 {
-    margin-left: 10px;
+    margin-left: 20px;
     color: white;
 }
 
 ul {
+    display: flex;
     list-style-type: none;
-    overflow: hidden;
-    position: absolute;
-    right: 0;
+    height: 100%;
 }
   
 li {
-    float: left;
+    height: 100%;
 }
 
 li a {
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     box-sizing: border-box;
     color: white;
     text-align: center;
     text-decoration: none;
-    padding: 25px 15px;
+    height: 100%;
+    padding: 0 15px;
 }
 
 li a:hover:not(.active) {
@@ -35,5 +40,5 @@ li a:hover:not(.active) {
 }
 
 .active {
-    background-color:#04AA6D;
+    background-color: #04AA6D;
 }
