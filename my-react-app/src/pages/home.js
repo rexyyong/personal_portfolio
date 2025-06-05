@@ -1,8 +1,8 @@
 import React from 'react';
 import rex from '../assets/images/rex.jpg';
 import './home.css';
-import './flexContainer.css';
-import HomeButton from './homeButton';
+import '../components/flexContainer.css';
+import HomeButton from '../components/homeButton';
 
 const Home = () => {
     return (

@@ -2,9 +2,9 @@
 
 import React from 'react';
 import Navbar from '../components/navbar';
-import Home from '../components/home';
-import AboutMe from '../components/aboutMe';
-import Contact from '../components/contact';
+import Home from '../pages/home';
+import AboutMe from '../pages/aboutMe';
+import Contact from '../pages/contact';
 
 const Layout = () => {
   return (

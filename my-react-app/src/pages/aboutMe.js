@@ -1,5 +1,5 @@
 import React from 'react';
-import './flexContainer.css';
+import '../components/flexContainer.css';
 import './aboutMe.css';
 import { Button } from '@mui/material';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';

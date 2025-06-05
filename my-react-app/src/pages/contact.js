@@ -1,5 +1,5 @@
 import React from 'react';
-import './flexContainer.css';
+import '../components/flexContainer.css';
 import './contact.css';
 import { Button } from '@mui/material';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
@@ -7,7 +7,18 @@ import GitHubIcon from '@mui/icons-material/GitHub';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import { ThemeProvider } from '@mui/material/styles';
-import theme from './muiTheme';
+import theme from '../components/muiTheme';
+
+const handleFailSubmit = () => {
+    alert("There was an error submitting your message. Please try again later.");
+    console.log("Form submission failed");
+}
+
+const handleSuccessSubmit = () => {
+    alert("Thank you for your message! I will get back to you soon!");
+    document.querySelector('.form-box').reset();
+    console.log("Form reset after successful submission");
+}
 
 const handleSubmit = async(event) => {
     event.preventDefault();
@@ -29,8 +40,10 @@ const handleSubmit = async(event) => {
 
         const data = await response.json();
         console.log("Response from server:", data);
+        handleSuccessSubmit();
     } catch (error) {
         console.log("Error", error);
+        handleFailSubmit();
     }
     console.log("Form Data Submitted:", formData);
 }
@@ -53,10 +66,10 @@ const Contact = () => {
 
             <div className="flex-box form">
                 <h2>Get in touch</h2>
-                <Box component="form" className="form-box" noValidate autoComplete="off" onSubmit={handleSubmit}>
+                <Box component="form" className="form-box" autoComplete="off" onSubmit={handleSubmit}>
                     <ThemeProvider theme={theme}>
                         <TextField required label="Name" name="name" fullWidth  />
-                        <TextField required label="Email" name="email" fullWidth />
+                        <TextField required type="email" label="Email" name="email" fullWidth />
                         <TextField required label="Subject" name="subject" fullWidth />
                         <TextField required label="Message" name="message" multiline rows={4} fullWidth />
                     </ThemeProvider>
