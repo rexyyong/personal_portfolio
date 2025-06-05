@@ -4,6 +4,7 @@ import React from 'react';
 import Navbar from '../components/navbar';
 import Home from '../components/home';
 import AboutMe from '../components/aboutMe';
+import Contact from '../components/contact';
 
 const Layout = () => {
   return (
@@ -11,6 +12,7 @@ const Layout = () => {
       <Navbar />    
       <Home />
       <AboutMe />
+      <Contact />
     </div>
   );
 };

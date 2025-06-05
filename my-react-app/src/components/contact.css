@@ -1,0 +1,28 @@
+.signpost > button {
+    border-radius: 10px;
+    background-color: lightblue;
+    color: black;
+    margin-right: 20px;
+}
+
+.signpost > p > a {
+    color: white;
+}
+
+.signpost h1 {
+    color: white;
+    /* text-align: left; */
+}
+
+.form-box > button {
+    background-color: lightblue;
+    color: black;
+}
+
+/* .form > h2 {
+    margin: 0 0 20px 0;
+} */
+
+.signpost {
+    text-align: center;
+}

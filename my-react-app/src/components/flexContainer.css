@@ -10,7 +10,6 @@
 .flex-box {
     flex: 1;
     margin: 0 10px;
-    border: 1px solid #ccc;
     padding: 20px;
     box-sizing: border-box;
 }
