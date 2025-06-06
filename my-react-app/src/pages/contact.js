@@ -9,6 +9,7 @@ import Box from '@mui/material/Box';
 import { ThemeProvider } from '@mui/material/styles';
 import theme from '../components/muiTheme';
 import { LoadingButton } from '@mui/lab';
+import ModelViewer from '../components/modelViewer';
 
 const Contact = () => {
     const [loading, setLoading] = React.useState(false);	
@@ -59,13 +60,14 @@ const Contact = () => {
             <div className="flex-box">
                     <div className='signpost'>
                         <h1>LET'S CONNECT!</h1>
-                        <p>Say hello at <a href="mailto:rexyyong@gmail.com">rexyyong@gmail.com</a></p>
+                        <h3>Say hello at <a href="mailto:rexyyong@gmail.com">rexyyong@gmail.com</a></h3>
                         <Button variant="contained" color="primary" onClick={() => window.open('https://www.linkedin.com/in/rexyong/', '_blank')}>
                             <LinkedInIcon className="button-icon" /> Linked in
                         </Button>
                         <Button variant="contained" color="primary" onClick={() => window.open('https://github.com/rexyyong', '_blank')}>
                             <GitHubIcon className="button-icon" /> Github
                         </Button>
+                        <ModelViewer scale="20" modelPath={"/assets/blender/tREX.glb"} />
                     </div>
             </div>
 

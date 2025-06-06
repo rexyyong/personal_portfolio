@@ -5,11 +5,11 @@
     margin-right: 20px;
 }
 
-.signpost > p > a {
+.signpost > h3 > a {
     color: white;
 }
 
-.signpost h1 {
+.signpost h3 {
     color: white;
     /* text-align: left; */
 }
@@ -25,4 +25,5 @@
 
 .signpost {
     text-align: center;
+    line-height: 1.5;
 }

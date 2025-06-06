@@ -50,11 +50,11 @@
 
 .skill-name {
   font-weight: 600;
-  font-size: 1.1rem;
+  font-size: 0.875rem;
   color: lightblue;
 }
 
 .skill-percent {
-  font-size: 1rem;
+  font-size: 0.875rem;
   color: orange;
 }
