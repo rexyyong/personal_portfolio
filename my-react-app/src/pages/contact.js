@@ -8,47 +8,52 @@ import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import { ThemeProvider } from '@mui/material/styles';
 import theme from '../components/muiTheme';
-
-const handleFailSubmit = () => {
-    alert("There was an error submitting your message. Please try again later.");
-    console.log("Form submission failed");
-}
-
-const handleSuccessSubmit = () => {
-    alert("Thank you for your message! I will get back to you soon!");
-    document.querySelector('.form-box').reset();
-    console.log("Form reset after successful submission");
-}
-
-const handleSubmit = async(event) => {
-    event.preventDefault();
-    const form = event.target.elements;
-    const formData = {
-        name: form.name.value,
-        email: form.email.value,
-        subject: form.subject.value,
-        message: form.message.value
-    }
-    try {
-        const response = await fetch("http://localhost:5000/api/contact", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(formData),
-        });
-
-        const data = await response.json();
-        console.log("Response from server:", data);
-        handleSuccessSubmit();
-    } catch (error) {
-        console.log("Error", error);
-        handleFailSubmit();
-    }
-    console.log("Form Data Submitted:", formData);
-}
+import { LoadingButton } from '@mui/lab';
 
 const Contact = () => {
+    const [loading, setLoading] = React.useState(false);	
+
+    const handleFailSubmit = () => {
+    alert("There was an error submitting your message. Please try again later.");
+    console.log("Form submission failed");
+    }
+
+    const handleSuccessSubmit = () => {
+        alert("Thank you for your message! I will get back to you soon!");
+        document.querySelector('.form-box').reset();
+        console.log("Form reset after successful submission");
+    }
+
+    const handleSubmit = async(event) => {
+        event.preventDefault();
+        setLoading(true);
+        const form = event.target.elements;
+        const formData = {
+            name: form.name.value,
+            email: form.email.value,
+            subject: form.subject.value,
+            message: form.message.value
+        }
+        try {
+            const response = await fetch("http://localhost:5000/api/contact", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(formData),
+            });
+
+            const data = await response.json();
+            console.log("Response from server:", data);
+            handleSuccessSubmit();
+            console.log("Form Data Submitted:", formData);
+        } catch (error) {
+            console.log("Error", error);
+            handleFailSubmit();
+        }
+        setLoading(false);
+    }
+
     return(
         <div className="flex-container">
             <div className="flex-box">
@@ -72,10 +77,15 @@ const Contact = () => {
                         <TextField required type="email" label="Email" name="email" fullWidth />
                         <TextField required label="Subject" name="subject" fullWidth />
                         <TextField required label="Message" name="message" multiline rows={4} fullWidth />
+                        <LoadingButton
+                        variant="contained"
+                        color="primary"
+                        type="submit"
+                        loading={loading}
+                        >
+                            Submit
+                        </LoadingButton>
                     </ThemeProvider>
-                    <Button variant="contained" color="primary" type="submit">
-                        Submit
-                    </Button>
                 </Box>
             </div>
         </div>
