@@ -55,7 +55,7 @@ const Contact = () => {
     }
 
     return(
-        <div className="flex-container">
+        <div className="flex-container" id="contact">
             <div className="flex-box">
                     <div className='signpost'>
                         <h1>LET'S CONNECT!</h1>
@@ -88,6 +88,7 @@ const Contact = () => {
                     </ThemeProvider>
                 </Box>
             </div>
+            <div style={{ height: "40vh" }} />
         </div>
     )
 }

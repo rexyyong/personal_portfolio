@@ -6,7 +6,7 @@ import LinkedInIcon from '@mui/icons-material/LinkedIn';
 
 const AboutMe = () => {
     return (
-        <div className="flex-container">
+        <div className="flex-container" id="about">
             <div className="flex-box signpost">
                 <h1>About Me</h1>
             </div>

@@ -1,0 +1,60 @@
+.skill-bar {
+    background: white;
+    border-radius: 20px;
+    height: 2vh;
+    width: 100%;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(214, 223, 208, 0.04);
+        position: relative;
+}
+
+.skill-level {
+    height: 100%;
+    border-radius: 20px 0 0 20px;
+    background: linear-gradient(90deg, lightblue 0%, orange 100%);
+    transition: width 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+}
+
+.skill-level::after {
+    content: '';
+    display: block;
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+    width: 16px;
+    background: linear-gradient(90deg, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0.0) 100%);
+    border-radius: 0 20px 20px 0;
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+.skills-list {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  padding-top: 1rem;
+}
+
+.skill-item {
+  margin-bottom: 1rem;
+}
+
+.skill-label-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.3rem;
+}
+
+.skill-name {
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: lightblue;
+}
+
+.skill-percent {
+  font-size: 1rem;
+  color: orange;
+}

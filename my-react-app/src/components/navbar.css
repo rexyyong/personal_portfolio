@@ -1,11 +1,14 @@
 nav {
+    position: fixed;
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 0px;
-    background: inherit; /* Optional: set a background if needed */
+    background: rgb(28, 22, 21); /* Optional: set a background if needed */
     margin-bottom: 10px;
     height: 10vh;
+    z-index: 1000;
+    width: 100%;
 }
 
 h2 {
@@ -33,6 +36,7 @@ li a {
     text-decoration: none;
     height: 100%;
     padding: 0 15px;
+    cursor: pointer;
 }
 
 li a:hover:not(.active) {
