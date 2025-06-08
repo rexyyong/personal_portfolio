@@ -25,7 +25,8 @@ const createTransporter = async () => {
   const accessToken = await new Promise((resolve, reject) => {
     oauth2Client.getAccessToken((err, token) => {
       if (err) {
-        reject();
+        console.error("Error retrieving access token:", err);
+        reject(err); // You should pass the error
       }
       resolve(token);
     });
@@ -52,10 +53,11 @@ const sendEmail = async (emailOptions) => {
   await emailTransporter.sendMail(emailOptions);
 };
 
-// Route to handle incoming user data
-// This route will be called when the contact form is submitted.
-// It saves the data to the database and sends an email.
+console.log("Contact route file loaded");
+
 router.post("/api/contact", async (req, res) => {
+  console.log("POST /api/contact hit");
+  console.log("BODY RECEIVED:", req.body); // Add this line
   const { name, email, subject, message } = req.body;
 
   try {
@@ -63,6 +65,7 @@ router.post("/api/contact", async (req, res) => {
     await contact.save();
 
     // Send email to user 
+    console.log("Sending email to user...");
     await sendEmail({
       subject: "Thank you for contacting me!",
       text: "Dear " + name + 
@@ -77,8 +80,10 @@ router.post("/api/contact", async (req, res) => {
       to: email,
       from: process.env.EMAIL
     });
+    console.log("User email sent.");
 
     // send email to myself
+    console.log("Sending email to myself...");
     await sendEmail({
       subject: "New contact form submission",
       text: "You have received a new message from your contact form:\n\n" +
@@ -89,6 +94,7 @@ router.post("/api/contact", async (req, res) => {
       to: process.env.EMAIL,
       from: process.env.EMAIL
     });
+    console.log("Self email sent.");
 
     res.status(200).json({ message: "User data received and email sent successfully!" });
   } catch (err) {

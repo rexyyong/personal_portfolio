@@ -32,13 +32,13 @@
 
 .skills-list {
   width: 100%;
-  max-width: 600px;
   margin: 0 auto;
   padding-top: 1rem;
 }
 
 .skill-item {
   margin-bottom: 1rem;
+  width: 100%;
 }
 
 .skill-label-row {

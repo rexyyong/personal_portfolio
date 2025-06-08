@@ -45,6 +45,12 @@ const Contact = () => {
             });
 
             const data = await response.json();
+
+            if (!response.ok) {
+                // Backend returned an error (e.g., unauthorized_client)
+                throw new Error(data.error || "Unknown server error");
+            }
+
             console.log("Response from server:", data);
             handleSuccessSubmit();
             console.log("Form Data Submitted:", formData);
@@ -67,7 +73,9 @@ const Contact = () => {
                         <Button variant="contained" color="primary" onClick={() => window.open('https://github.com/rexyyong', '_blank')}>
                             <GitHubIcon className="button-icon" /> Github
                         </Button>
-                        <ModelViewer scale="20" modelPath={"/assets/blender/tREX.glb"} />
+                        <div className="model-viewer-wrapper">
+                            <ModelViewer scale="4" modelPath={"/assets/blender/tREX.glb"} />
+                        </div>
                     </div>
             </div>
 
