@@ -79,7 +79,7 @@ const Contact = () => {
                     </div>
             </div>
 
-            <div className="flex-box form">
+            <div className="flex-box form" id="contact-form">
                 <h2>Get in touch</h2>
                 <Box component="form" className="form-box" autoComplete="off" onSubmit={handleSubmit}>
                     <ThemeProvider theme={theme}>

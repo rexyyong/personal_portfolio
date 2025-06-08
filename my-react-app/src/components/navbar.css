@@ -1,14 +1,14 @@
 nav {
-    position: fixed;
+    position: sticky;
+    top: 0;
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    padding: 0px;
-    background: rgb(28, 22, 21); /* Optional: set a background if needed */
-    margin-bottom: 10px;
-    height: 10vh;
-    z-index: 1000;
-    width: 100%;
+    justify-content: space-between;
+    padding: 0 24px;
+    background: #222;
+    color: #fff;
+    height: 60px;
+    z-index: 100;
 }
 
 h2 {
@@ -16,14 +16,19 @@ h2 {
     color: white;
 }
 
-ul {
+ul, .navbar-links {
     display: flex;
     list-style-type: none;
     height: 100%;
+    margin: 0;
+    padding: 0;
+    transition: max-height 0.3s;
+    gap: 32px; /* Add this for spacing between nav items */
 }
   
 li {
     height: 100%;
+    width: 100%;
 }
 
 li a {
@@ -31,18 +36,86 @@ li a {
     align-items: center;
     justify-content: center;
     box-sizing: border-box;
-    color: white;
+    color: #fff;
     text-align: center;
     text-decoration: none;
     height: 100%;
-    padding: 0 15px;
+    width: 100%;           /* Make link fill the li */
+    padding: 8px 24px;     /* Add horizontal padding for a bigger box */
     cursor: pointer;
+    transition: background 0.2s;
+    border-radius: 0;      /* Remove if you want sharp corners */
 }
 
-li a:hover:not(.active) {
+li a:hover:not(.active),
+li a.active {
     background-color: #111;
 }
 
 .active {
     background-color: #04AA6D;
+}
+
+.navbar-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    z-index: 101;
+}
+
+.navbar-toggle .bar {
+    width: 28px;
+    height: 3px;
+    background: #fff;
+    margin: 4px 0;
+    border-radius: 2px;
+    transition: 0.3s;
+}
+
+/* Responsive styles */
+@media (max-width: 700px) {
+    .navbar-links {
+        position: absolute;
+        top: 60px;         /* Exactly matches navbar height */
+        left: 0;
+        right: 0;
+        background: #222;
+        flex-direction: column;
+        align-items: center;
+        max-height: 0;
+        overflow: hidden;
+        width: 100%;
+        transition: max-height 0.3s;
+        padding: 0;
+        margin-top: 0;     /* Ensure no gap */
+        border-top: none;  /* Ensure no border */
+        z-index: 99;       /* Make sure it's below the navbar toggle */
+    }
+    .navbar-links.open {
+        max-height: 30vh;
+        height: 30vh;
+        overflow-y: auto;
+        padding: 12px 0;
+    }
+    .navbar-links li {
+        width: 100%;              /* Each option takes full width */
+        padding: 0;
+        display: flex;
+        justify-content: center;  /* Center the link inside li */
+    }
+    .navbar-links li a {
+        display: block;
+        width: 100%;
+        padding: 16px 0;
+        text-align: center;       /* Center text */
+    }
+    .navbar-toggle {
+        display: flex;
+    }
 }
