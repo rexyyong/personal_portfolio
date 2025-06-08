@@ -1,6 +1,7 @@
 import React from "react";
 import "../components/flexContainer.css";
 import "./mySkills.css";
+import { useFloatInOnScroll } from "../components/useFloatInOnScroll";
 
 const SKILLS = [
   { type: "HTML", level: 100 },
@@ -17,8 +18,14 @@ const SKILLS = [
 ];
 
 const MySkills = () => {
+    const [ref, visible] = useFloatInOnScroll();
+
     return (
-        <div className="flex-container" id="mySkills">
+        <div
+            ref={ref}
+            className={`flex-container float-in${visible ? " visible" : ""}`}
+            id="mySkills"
+        >
             <div className="flex-box">
                 <div className="signpost">
                     <h1>My Skills</h1>

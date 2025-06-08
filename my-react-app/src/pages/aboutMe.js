@@ -1,12 +1,19 @@
 import React from 'react';
-import '../components/flexContainer.css';
+import { useFloatInOnScroll } from '../components/useFloatInOnScroll';
+import '../components/flexContainer.css'; // Make sure this is imported for the animation styles
 import './aboutMe.css';
 import { Button } from '@mui/material';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 
 const AboutMe = () => {
+    const [ref, visible] = useFloatInOnScroll();
+
     return (
-        <div className="flex-container" id="about">
+        <div
+            ref={ref}
+            className={`flex-container float-in${visible ? ' visible' : ''}`}
+            id="about"
+        >
             <div className="flex-box signpost">
                 <h1>About Me</h1>
             </div>
