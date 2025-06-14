@@ -20,6 +20,11 @@ mongoose.connect(process.env.ATLAS_URI, {
 .then(() => console.log('MongoDB connected'))
 .catch(err => console.log(err));
 
+// Heartbeat route (for Render or uptime monitoring)
+app.get('/ping', (req, res) => {
+  res.send('pong');
+});
+
 // Use your contact routes
 app.use('/', contactRoutes);
 
