@@ -6,6 +6,7 @@ import Layout from './layout/layout';
 function App() {
   return (
     <Router>
+      <title>Rex Yong</title>
       <Routes>
         <Route path="/" element={<Layout />} />
       </Routes>
