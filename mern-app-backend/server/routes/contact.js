@@ -1,105 +1,78 @@
-import dotenv from 'dotenv';
-dotenv.config({path: '../config.env'}); // Load environment variables from config.env  
 import express from 'express';
-import Contact from '../models/Contact.js';
-import nodemailer from 'nodemailer';
-import { google } from 'googleapis';
-const OAuth2 = google.auth.OAuth2;
+import Contact from '../models/Contact.js'; 
+import formData from 'form-data'; 
+import Mailgun from 'mailgun.js'; 
 
+const mailgun = new Mailgun(formData);
 const router = express.Router();
 
-// Create a transporter using OAuth2 for Gmail. 
-// This allows sending emails without exposing your password.
-// Make sure to set up your OAuth2 credentials in the .env file.
-const createTransporter = async () => {
-  const oauth2Client = new OAuth2(
-    process.env.CLIENT_ID,
-    process.env.CLIENT_SECRET,
-    "https://developers.google.com/oauthplayground"
-  );
-
-  oauth2Client.setCredentials({
-    refresh_token: process.env.REFRESH_TOKEN
-  });
-
-  const accessToken = await new Promise((resolve, reject) => {
-    oauth2Client.getAccessToken((err, token) => {
-      if (err) {
-        console.error("Error retrieving access token:", err);
-        reject(err); // You should pass the error
-      }
-      resolve(token);
-    });
-  });
-
-  const transporter = nodemailer.createTransport({
-    service: "gmail",
-    auth: {
-      type: "OAuth2",
-      user: process.env.EMAIL,
-      accessToken,
-      clientId: process.env.CLIENT_ID,
-      clientSecret: process.env.CLIENT_SECRET,
-      refreshToken: process.env.REFRESH_TOKEN,
-    },
-  });
-
-  return transporter;
-};
-
-//emailOptions - who sends what to whom
-const sendEmail = async (emailOptions) => {
-  let emailTransporter = await createTransporter();
-  await emailTransporter.sendMail(emailOptions);
-};
-
-console.log("Contact route file loaded");
+console.log("Contact route file loaded (Mailgun version)");
 
 router.post("/api/contact", async (req, res) => {
-  console.log("POST /api/contact hit");
-  console.log("BODY RECEIVED:", req.body); // Add this line
-  const { name, email, subject, message } = req.body;
+    console.log("POST /api/contact hit");
+    console.log("BODY RECEIVED:", req.body);
+    const { name, email, subject, message } = req.body;
 
-  try {
-    const contact = new Contact({ name, email, subject, message });
-    await contact.save();
-
-    // Send email to user 
-    console.log("Sending email to user...");
-    await sendEmail({
-      subject: "Thank you for contacting me!",
-      text: "Dear " + name + 
-            ",\n\nThank you for reaching out!" +
-            "I will get back to you as soon as possible.\n\n" +
-            "Heres a summary of your response: \n" +
-            "Name: " + name + 
-            "\nEmail: " + email +
-            "\nSubject: " + subject +
-            "\nMessage: " + message +
-            "\n\nBest regards,\nRex Yong",
-      to: email,
-      from: process.env.EMAIL
+    const mg = mailgun.client({
+        username: 'api',
+        key: process.env.MAILGUN_API_KEY, 
     });
-    console.log("User email sent.");
 
-    // send email to myself
-    console.log("Sending email to myself...");
-    await sendEmail({
-      subject: "New contact form submission",
-      text: "You have received a new message from your contact form:\n\n" +
-            "Name: " + name + 
-            "\nEmail: " + email +
-            "\nSubject: " + subject +
-            "\nMessage: " + message,
-      to: process.env.EMAIL,
-      from: process.env.EMAIL
-    });
-    console.log("Self email sent.");
+    if (!process.env.MAILGUN_API_KEY || !process.env.MAILGUN_DOMAIN) {
+      console.error("Mailgun API Key or Domain is not set. Check environment variables.");
+      return res.status(500).json({ error: "Server configuration error." });
+    }
 
-    res.status(200).json({ message: "User data received and email sent successfully!" });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
+    try {
+        const contact = new Contact({ name, email, subject, message });
+        await contact.save();
+        console.log("Contact saved to MongoDB.");
+
+        // --- START OF CHANGES ---
+
+        // 1. Create the notification email for YOURSELF
+        const msgToSelf = {
+            from: `Rex Yong (Portfolio) <mail@${process.env.MAILGUN_DOMAIN}>`, 
+            to: 'rexyyong@gmail.com', // Your personal email
+            subject: `New Portfolio Message from ${name}`,
+            text: `You have received a new message from your contact form:\n\n` +
+                  `Name: ${name}\n` +
+                  `Email: ${email}\n` +
+                  `Subject: ${subject}\n` +
+                  `Message: ${message}`
+        };
+        
+        // 2. Create the confirmation email for the USER
+        const msgToUser = {
+            from: `Rex Yong <mail@${process.env.MAILGUN_DOMAIN}>`,
+            to: email, // <-- This sends to the person who filled out the form
+            subject: 'Thank you for contacting me!',
+            text: `Hi ${name},\n\n` +
+                  `Thank you for reaching out! I've received your message and will get back to you as soon as possible.\n\n` +
+                  `Best regards,\n` +
+                  `Rex Yong`
+        };
+
+        // 3. Send BOTH emails
+        console.log("Sending notification to self...");
+        await mg.messages.create(process.env.MAILGUN_DOMAIN, msgToSelf);
+        
+        console.log("Sending confirmation to user...");
+        await mg.messages.create(process.env.MAILGUN_DOMAIN, msgToUser);
+
+        // --- END OF CHANGES ---
+
+        console.log("Emails sent successfully.");
+
+        res.status(200).json({ message: "User data received and email sent successfully!" });
+
+    } catch (err) {
+        console.error("Error in contact form:", err);
+        if (err.response) {
+          console.error(err.response.body);
+        }
+        res.status(500).json({ error: "Failed to send message." });
+    }
 });
 
 export default router;

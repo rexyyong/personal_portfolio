@@ -40,10 +40,8 @@ cd personal_portfolio
 3. Create a `config.env` file in `mern-app-backend/server/` with the following variables:
     ```
     ATLAS_URI=<your-mongodb-atlas-uri>
-    CLIENT_ID=<your-google-oauth-client-id>
-    CLIENT_SECRET=<your-google-oauth-client-secret>
-    REFRESH_TOKEN=<your-google-oauth-refresh-token>
-    EMAIL=<your-gmail-address>
+    MAILGUN_API_KEY=<your_mailgun_api_key>
+    MAILGUN_DOMAIN=<your_domain>
     ```
 
 4. Start the backend server:
