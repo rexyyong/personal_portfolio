@@ -7,7 +7,12 @@ import contactRoutes from './routes/contact.js';
 
 import cors from 'cors';
 
+import { execSync } from 'child_process';
+
 const app = express();
+
+const npmVersion = execSync('npm --version').toString().trim();
+console.log(`Current NPM version asdf: ${npmVersion}`);
 
 app.use(cors()); // Enable CORS for all routes
 app.use(express.json());
